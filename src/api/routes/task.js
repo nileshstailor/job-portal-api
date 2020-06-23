@@ -27,19 +27,18 @@ router.get('/get-tasks-by-id', async (req, res) => {
 
 
 
-router.post('/insert-tasks', async (req, res) => {
-    const tasksModel = db.model('tasks', taskSchema);
-    const task = new tasksModel({
-        title: "Food Delivery Mobile Application",
-        content: "Content",
-        minBudget: 2500,
-        maxBudget: 4500,
-        employer: {
-            area: 'germany'
-        }
-    });
-    task.save();
-    res.status(200).json({ success: true })
+router.get('/insert-tasks', async (req, res) => {
+
+    try {
+        var result = await taskController.insertTask(req);
+        res.status(200).json({ success: true, tasks: result })
+    }
+    catch (ex) {
+
+        res.status(200).json({ success: true, tasks: result })
+    }
+   
+    
 })
 
 //update task
